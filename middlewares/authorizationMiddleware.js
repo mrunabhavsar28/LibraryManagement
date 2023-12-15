@@ -1,4 +1,3 @@
-// middlewares/authorizationMiddleware.js
 const { ROLES } = require('../utils/constants');
 
 const authorizeAdmin = (req, res, next) => {

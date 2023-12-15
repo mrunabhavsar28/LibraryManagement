@@ -9,18 +9,14 @@ const getBooks = (books) => (req, res) => {
             if (!isNaN(propertyValue) && !isNaN(filterValue)) {
                 return Number(propertyValue) === Number(filterValue);
             }
-
-            // Case-insensitive comparison for string properties
             if (typeof propertyValue === 'string' && typeof filterValue === 'string') {
                 return propertyValue.toLowerCase().includes(filterValue.toLowerCase());
             }
 
-            // Regular comparison for non-string properties
             return propertyValue === filterValue;
         });
     }
 
-    // Paginate the filtered results
     const paginatedResults = paginateResults(page, pageSize, filteredBooks);
 
     res.json(paginatedResults);
@@ -29,7 +25,6 @@ const getBooks = (books) => (req, res) => {
 const getBookById = (books) => (req, res) => {
     const bookId = parseInt(req.params.bookId);
 
-    // Implement logic to fetch a book by ID
     const book = books.find((b) => b.id === bookId);
 
     if (!book) {
@@ -42,9 +37,8 @@ const getBookById = (books) => (req, res) => {
 const addBook = (req, res, books) => {
     const { title, author, genre, publishedDate, totalCopies } = req.body;
 
-    // Check if the request body contains an array of books
     if (Array.isArray(req.body)) {
-        // Bulk book addition
+        
         const newBooks = req.body.map((book, index) => ({
             id: books.length + index + 1,
             title: book.title,
@@ -59,7 +53,7 @@ const addBook = (req, res, books) => {
 
         res.json({ message: `${newBooks.length} books added successfully` });
     } else {
-        // Single book addition
+       
         const newBook = {
             id: books.length + 1,
             title,
@@ -79,7 +73,6 @@ const addBook = (req, res, books) => {
 const updateBook = (req, res, books) => {
     const bookId = parseInt(req.params.bookId);
 
-    // Implement logic to update a book
     const bookIndex = books.findIndex((b) => b.id === bookId);
     const book = books.find((b) => b.id === bookId);
 
@@ -105,7 +98,6 @@ const updateBook = (req, res, books) => {
 const partialUpdateBook = (req, res, books) => {
     const bookId = parseInt(req.params.bookId);
 
-    // Implement logic to partially update a book
     const bookIndex = books.findIndex((b) => b.id === bookId);
 
     if (bookIndex === -1) {

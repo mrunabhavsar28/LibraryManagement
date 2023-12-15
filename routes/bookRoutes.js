@@ -1,4 +1,3 @@
-// routes/bookRoutes.js
 const express = require('express');
 const { getBooks, getBookById, addBook, updateBook, partialUpdateBook } = require('../controllers/bookController');
 

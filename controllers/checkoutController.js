@@ -3,8 +3,6 @@ const { CHECKOUT_STATUS } = require('../utils/constants');
 const checkoutBook = (req, res, books, checkouts) => {
     const userId = req.user.id;
     const bookId = parseInt(req.params.bookId);
-
-    // Implement logic to checkout a book
     const book = books.find((b) => b.id === bookId);
 
     if (!book) {
@@ -48,7 +46,6 @@ const returnBook = (req, res, books, checkouts) => {
     const userId = req.user.id;
     const bookId = parseInt(req.params.bookId);
 
-    // Implement logic to return a book
     const checkout = checkouts.find((c) => c.userId === userId && c.bookId === bookId && c.status === CHECKOUT_STATUS.ISSUED);
 
     if (!checkout) {
@@ -66,7 +63,6 @@ const returnBook = (req, res, books, checkouts) => {
 
 const incrementLateFineForOverdueBooks = async (checkouts, users) => {
     try {
-        // Get overdue books
         console.log("Checkouts: ", checkouts);
         console.log("users: ", users);
         if (checkouts && checkouts.length > 0) {
@@ -74,10 +70,8 @@ const incrementLateFineForOverdueBooks = async (checkouts, users) => {
                 return checkout.status === CHECKOUT_STATUS.ISSUED && new Date(checkout.returnDate) < new Date();
             });
 
-            // Increment late return fine for each overdue book
             overdueCheckouts.forEach((c) => {
                 const user = users.find((u) => c.userId === u.id);
-                //const userIndex = users.findIndex((b) => b.id === user);
                 if (user) {
                     user.lateReturnFine = (user.lateReturnFine || 0) + 10;
                 }
@@ -86,20 +80,9 @@ const incrementLateFineForOverdueBooks = async (checkouts, users) => {
         }
         console.log("Checkouts after JOB: ", checkouts);
         console.log("users after JOB: ", users);
-        // users[bookIndex] = {
-        //     ...books[bookIndex],
-        //     title: title || books[bookIndex].title,
     } catch (error) {
         throw new Error(`Error updating late fines: ${error.message}`);
     }
 };
-
-// Helper function to save the updated books (replace this with your actual implementation)
-const saveBooks = async (books) => {
-    // Your implementation to save the updated books (e.g., update records in a database)
-    // For simplicity, let's assume you have a function saveBooksToDatabase(books) to save the updated books
-    await saveBooksToDatabase(books);
-};
-
 
 module.exports = { checkoutBook, returnBook, incrementLateFineForOverdueBooks };

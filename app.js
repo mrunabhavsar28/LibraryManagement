@@ -17,7 +17,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// In-memory data structures
 const users = [{ id: 1, name: "Mrunalini Bhavsar", email: "mrunabhavsar28@gmail.com", password: "Qwerty@987", role: ROLES.ADMIN }];
 const books = [];
 const checkouts = [];
@@ -31,7 +30,6 @@ app.use('/library', authenticateToken, checkoutRoutes(books, checkouts));
 // runs job every 24 hours at 00:00 of every day
 cron.schedule('0 0 * * *', async () => {
     try {
-        // Call the function to increment late return fine for overdue books
         await incrementLateFineForOverdueBooks(checkouts, users);
         console.log('Late fines updated successfully.');
     } catch (error) {

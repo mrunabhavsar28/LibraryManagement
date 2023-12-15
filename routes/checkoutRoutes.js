@@ -1,4 +1,3 @@
-// routes/checkoutRoutes.js
 const express = require('express');
 const { checkoutBook, returnBook } = require('../controllers/checkoutController');
 
