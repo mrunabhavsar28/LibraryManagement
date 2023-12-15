@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // In-memory data structures
-const users = [{ id: 1, name: "Mrunalini Bhavsar", email: "mrunabhavsar28@gmail.com", password: "qwerty", role: ROLES.ADMIN }];
+const users = [{ id: 1, name: "Mrunalini Bhavsar", email: "mrunabhavsar28@gmail.com", password: "Qwerty@987", role: ROLES.ADMIN }];
 const books = [];
 const checkouts = [];
 
